@@ -1,31 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Hello World</title>
-    <url>/2024/06/19/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very
-first post. Check <a href="https://hexo.io/docs/">documentation</a> for
-more info. If you get any problems when using Hexo, you can find the
-answer in <a
-href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or
-you can ask me on <a
-href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="quick-start">Quick Start</h2>
-<h3 id="create-a-new-post">Create a new post</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a
-href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="run-server">Run server</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="generate-static-files">Generate static files</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a
-href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="deploy-to-remote-sites">Deploy to remote sites</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a
-href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+    <title>深度强化学习基础(1)</title>
+    <url>/2024/06/19/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80-1/</url>
+    <content><![CDATA[<p>本系列博客主要是我本人在学习datawhale的强化学习课程的一些心得和笔记，如有不妥可联系作者修改。
+## CH2 马尔可夫决策过程 ### 非马尔可夫
+当过程不满足马尔可夫性的时候也可以使用强化学习来解决，可以用深度学习神经网络来表示当前的棋局，并用蒙特卡洛搜索树等技术来模拟玩家的策略和未来可能的状态，来构建一个新的决策模型，这就是著名的AlphaGo算法。
+### 回报 在有限步长时，我们可以简单的把累积的奖励定义为回报，用<span
+class="math inline">\(G_t\)</span>表示，公式为： <span
+class="math display">\[G_t=r_{t+1}+r_{t+2}+\dots+r_T\]</span>
+但也有一些情况是没有终止状态的，换句话说智能体会持续与环境交互，比如人造卫星在发射出去后会一直在外太空作业直到报废或者被回收，这样的任务称之为持续性任务。在持续性任务中上面的回报公式是有问题的，因为此时<span
+class="math inline">\(T=\infty\)</span>。
+为了解决这个问题，我们引入一个折扣因子（discount factor）<span
+class="math inline">\(\gamma\)</span>，并可以将回报表示为: <span
+class="math display">\[
+G_t = r_{t+1} + \gamma r_{t+2} + \gamma^2 r_{t+3} + \cdots =
+\sum_{k=0}^{T=\infty} \gamma^k r_{t+k+1}\]</span> 其中<span
+class="math inline">\(\gamma\)</span> 取值范围在0 到 1
+之间，它表示了我们在考虑未来奖励时的重要程度，控制着当前奖励和未来奖励之间的权衡。换句话说，它体现了我们对长远目标的关注度。当
+<span class="math inline">\(\gamma=0\)</span>
+时，我们只会关心当前的奖励，而不会关心将来的任何奖励。而当 <span
+class="math inline">\(\gamma\)</span> 接近 1
+时，我们会对所有未来奖励都给予较高的关注度。</p>
+<p>同时，这样定义<span class="math inline">\(G_t\)</span>和<span
+class="math inline">\(G_{t+1}\)</span>有如下关系： <span
+class="math display">\[G_t=r_{t+1}+\gamma G_{t+1}\]</span> ### MDP
+在马尔可夫链（马尔可夫过程）的基础上增加奖励元素就会形成马尔可夫奖励过程（Markov
+reward process,
+MRP），在马尔可夫奖励过程基础上增加动作的元素就会形成马尔可夫决策过程，也就是强化学习的基本问题模型之一。</p>
+<p>到这里我们就可以把马尔可夫决策过程描述成一个今天常用的写法，即用一个五元组$
+&lt;S,A,R,P,&gt;$ 来表示。其中 S 表示状态空间，即所有状态的集合，A
+表示动作空间，R 表示奖励函数，P 表示状态转移矩阵，<span
+class="math inline">\(\gamma\)</span>
+表示折扣因子。想必读者此时已经明白这简简单单的五个字母符号，背后蕴涵了丰富的内容。
+## CH3 动态规划 ### 动态规划思想 &gt;
+动态规划问题有三个性质，最优化原理、无后效性和有重叠子问题。其中有重叠子问题不是动态规划问题的必要条件，这里就不展开叙述。无后效性指的是即某阶段状态一旦确定，就不受这个状态以后决策的影响。也就是说，某状态以后的过程不会影响以前的状态，只与当前状态有关，这其实就是前面所说的马尔可夫性质。而最优化原理是指，如果问题的最优解所包含的子问题的解也是最优的，就称该问题具有最优子结构，即满足最优化原理。马尔可夫决策过程的目标是最大化累积回报，回顾上一章讲到的回报公式：<span
+class="math display">\[G_{t} = R_{t+1}+\gamma
+G_{t+1}\]</span>这个公式表明当前时步的回报跟下一个时步的回报是有关系的，这跟机器人路径之和例题中的状态转移方程很像。换句话说，我们可以在不同时步上通过某种方法最大化对应时步的回报来解决马尔可夫决策问题，我们要解决<span
+class="math inline">\(G_{t+1}\)</span> 的问题，可以一次拆分成解决<span
+class="math inline">\(G_{t}, G_{t-1},\cdots,G_{1}\)</span>
+的问题，这其实就满足动态规划性质中的最优化原理。</p>
+<p>书中原文如上所示，我个人的理解是动态优化实际上是利用了计算机的计算速度，可以使用迭代去进行求解，即如果一个m状态的问题可以与m-1状态的问题有联系，那么可通过设定边界条件把问题求出。
+### 状态价值函数和动作价值函数 <strong>状态价值函数（state-value
+function）</strong>：直观上就是我们采取策略<span
+class="math inline">\(\pi\)</span>的话在状态<span
+class="math inline">\(s\)</span>处的回报是多少(因为就算采取动作a，r_t也是一个随机变量，所以需要取期望)，表达式为：
+<span class="math display">\[\begin{aligned}
+V_\pi(s) &amp;=\mathbb{E}_{\pi}[R_t+\gamma R_{t+1}+\gamma^2 R_{t+2} +
+\cdots |S_t=s ] \\
+&amp;=\mathbb{E}_{\pi}[G_t|S_t=s ]
+\end{aligned}\]</span> <strong>动作价值函数（action-value
+function）</strong>：直观上就是在状态价值函数的基础上确定了在<span
+class="math inline">\(s\)</span>状态会采取动作<span
+class="math inline">\(a\)</span>。表达式为： <span
+class="math display">\[Q_\pi(s, a)=\mathbb{E}_\pi\left[G_t \mid s_t=s,
+a_t=a\right]\]</span></p>
+<p><strong>两者关系</strong></p>
+<p><span class="math display">\[V_\pi(s)=\sum_{a \in A} \pi(a \mid s)
+Q_\pi(s, a)\]</span></p>
+<p>其中<span
+class="math inline">\(\pi(a|s)\)</span>表示策略函数，一般指在状态<span
+class="math inline">\(s\)</span>下执行动作<span
+class="math inline">\(a\)</span>的概率分布。</p>
 ]]></content>
+      <categories>
+        <category>强化学习</category>
+      </categories>
+      <tags>
+        <tag>datawhale</tag>
+        <tag>强化学习</tag>
+      </tags>
   </entry>
 </search>
