@@ -20,15 +20,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"stone2li.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":"ture","style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":-1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="本系列博客主要是我本人在学习datawhale的强化学习课程的一些心得和笔记，如有不妥可联系作者修改。 ## CH2 马尔可夫决策过程 ### 非马尔可夫 当过程不满足马尔可夫性的时候也可以使用强化学习来解决，可以用深度学习神经网络来表示当前的棋局，并用蒙特卡洛搜索树等技术来模拟玩家的策略和未来可能的状态，来构建一个新的决策模型，这就是著名的AlphaGo算法。 ### 回报 在有限步长时，">
+    <meta name="description" content="本系列博客主要是我本人在学习datawhale的强化学习课程的一些心得和笔记，如有不妥可联系作者修改。 CH2 马尔可夫决策过程 非马尔可夫 当过程不满足马尔可夫性的时候也可以使用强化学习来解决，可以用深度学习神经网络来表示当前的棋局，并用蒙特卡洛搜索树等技术来模拟玩家的策略和未来可能的状态，来构建一个新的决策模型，这就是著名的AlphaGo算法。 回报 在有限步长时，我们可以简单的把累">
 <meta property="og:type" content="article">
-<meta property="og:title" content="深度强化学习基础(1)">
+<meta property="og:title" content="深度强化学习基础(1)：马尔可夫决策过程，动态规划">
 <meta property="og:url" content="https://stone2li.github.io/2024/06/19/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80-1/index.html">
 <meta property="og:site_name" content="Songtao Li&#39;s Blog">
-<meta property="og:description" content="本系列博客主要是我本人在学习datawhale的强化学习课程的一些心得和笔记，如有不妥可联系作者修改。 ## CH2 马尔可夫决策过程 ### 非马尔可夫 当过程不满足马尔可夫性的时候也可以使用强化学习来解决，可以用深度学习神经网络来表示当前的棋局，并用蒙特卡洛搜索树等技术来模拟玩家的策略和未来可能的状态，来构建一个新的决策模型，这就是著名的AlphaGo算法。 ### 回报 在有限步长时，">
+<meta property="og:description" content="本系列博客主要是我本人在学习datawhale的强化学习课程的一些心得和笔记，如有不妥可联系作者修改。 CH2 马尔可夫决策过程 非马尔可夫 当过程不满足马尔可夫性的时候也可以使用强化学习来解决，可以用深度学习神经网络来表示当前的棋局，并用蒙特卡洛搜索树等技术来模拟玩家的策略和未来可能的状态，来构建一个新的决策模型，这就是著名的AlphaGo算法。 回报 在有限步长时，我们可以简单的把累">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-06-19T06:43:24.000Z">
-<meta property="article:modified_time" content="2024-06-19T17:29:09.918Z">
+<meta property="article:modified_time" content="2024-06-27T07:35:26.615Z">
 <meta property="article:author" content="Stone Li">
 <meta property="article:tag" content="datawhale">
 <meta property="article:tag" content="强化学习">
@@ -39,10 +39,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://stone2li.github.io/2024/06/19/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80-1/","path":"2024/06/19/深度强化学习基础-1/","title":"深度强化学习基础(1)"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://stone2li.github.io/2024/06/19/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80-1/","path":"2024/06/19/深度强化学习基础-1/","title":"深度强化学习基础(1)：马尔可夫决策过程，动态规划"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>深度强化学习基础(1) | Songtao Li's Blog</title>
+<title>深度强化学习基础(1)：马尔可夫决策过程，动态规划 | Songtao Li's Blog</title>
   
 
 
@@ -129,7 +129,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           Table of Contents
@@ -142,6 +142,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ch2-%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">CH2 马尔可夫决策过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%9E%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB"><span class="nav-number">1.1.</span> <span class="nav-text">非马尔可夫</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9E%E6%8A%A5"><span class="nav-number">1.2.</span> <span class="nav-text">回报</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mdp"><span class="nav-number">1.3.</span> <span class="nav-text">MDP</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ch3-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92"><span class="nav-number">2.</span> <span class="nav-text">CH3 动态规划</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%80%9D%E6%83%B3"><span class="nav-number">2.1.</span> <span class="nav-text">动态规划思想</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8A%B6%E6%80%81%E4%BB%B7%E5%80%BC%E5%87%BD%E6%95%B0%E5%92%8C%E5%8A%A8%E4%BD%9C%E4%BB%B7%E5%80%BC%E5%87%BD%E6%95%B0"><span class="nav-number">2.2.</span> <span class="nav-text">状态价值函数和动作价值函数</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -215,12 +216,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="深度强化学习基础(1) | Songtao Li's Blog">
+      <meta itemprop="name" content="深度强化学习基础(1)：马尔可夫决策过程，动态规划 | Songtao Li's Blog">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          深度强化学习基础(1)
+          深度强化学习基础(1)：马尔可夫决策过程，动态规划
         </h1>
 
         <div class="post-meta-container">
@@ -238,7 +239,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2024-06-20 01:29:09" itemprop="dateModified" datetime="2024-06-20T01:29:09+08:00">2024-06-20</time>
+      <time title="Modified: 2024-06-27 15:35:26" itemprop="dateModified" datetime="2024-06-27T15:35:26+08:00">2024-06-27</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -259,10 +260,12 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p>本系列博客主要是我本人在学习datawhale的强化学习课程的一些心得和笔记，如有不妥可联系作者修改。
-## CH2 马尔可夫决策过程 ### 非马尔可夫
-当过程不满足马尔可夫性的时候也可以使用强化学习来解决，可以用深度学习神经网络来表示当前的棋局，并用蒙特卡洛搜索树等技术来模拟玩家的策略和未来可能的状态，来构建一个新的决策模型，这就是著名的AlphaGo算法。
-### 回报 在有限步长时，我们可以简单的把累积的奖励定义为回报，用<span
+    <div class="post-body" itemprop="articleBody"><p>本系列博客主要是我本人在学习datawhale的强化学习课程的一些心得和笔记，如有不妥可联系作者修改。</p>
+<h2 id="ch2-马尔可夫决策过程">CH2 马尔可夫决策过程</h2>
+<h3 id="非马尔可夫">非马尔可夫</h3>
+<p>当过程不满足马尔可夫性的时候也可以使用强化学习来解决，可以用深度学习神经网络来表示当前的棋局，并用蒙特卡洛搜索树等技术来模拟玩家的策略和未来可能的状态，来构建一个新的决策模型，这就是著名的AlphaGo算法。</p>
+<h3 id="回报">回报</h3>
+<p>在有限步长时，我们可以简单的把累积的奖励定义为回报，用<span
 class="math inline">\(G_t\)</span>表示，公式为： <span
 class="math display">\[G_t=r_{t+1}+r_{t+2}+\dots+r_T\]</span>
 但也有一些情况是没有终止状态的，换句话说智能体会持续与环境交互，比如人造卫星在发射出去后会一直在外太空作业直到报废或者被回收，这样的任务称之为持续性任务。在持续性任务中上面的回报公式是有问题的，因为此时<span
@@ -280,24 +283,29 @@ class="math inline">\(\gamma\)</span> 接近 1
 时，我们会对所有未来奖励都给予较高的关注度。</p>
 <p>同时，这样定义<span class="math inline">\(G_t\)</span>和<span
 class="math inline">\(G_{t+1}\)</span>有如下关系： <span
-class="math display">\[G_t=r_{t+1}+\gamma G_{t+1}\]</span> ### MDP
-在马尔可夫链（马尔可夫过程）的基础上增加奖励元素就会形成马尔可夫奖励过程（Markov
+class="math display">\[G_t=r_{t+1}+\gamma G_{t+1}\]</span></p>
+<h3 id="mdp">MDP</h3>
+<p>在马尔可夫链（马尔可夫过程）的基础上增加奖励元素就会形成马尔可夫奖励过程（Markov
 reward process,
 MRP），在马尔可夫奖励过程基础上增加动作的元素就会形成马尔可夫决策过程，也就是强化学习的基本问题模型之一。</p>
 <p>到这里我们就可以把马尔可夫决策过程描述成一个今天常用的写法，即用一个五元组$
 &lt;S,A,R,P,&gt;$ 来表示。其中 S 表示状态空间，即所有状态的集合，A
 表示动作空间，R 表示奖励函数，P 表示状态转移矩阵，<span
 class="math inline">\(\gamma\)</span>
-表示折扣因子。想必读者此时已经明白这简简单单的五个字母符号，背后蕴涵了丰富的内容。
-## CH3 动态规划 ### 动态规划思想 &gt;
-动态规划问题有三个性质，最优化原理、无后效性和有重叠子问题。其中有重叠子问题不是动态规划问题的必要条件，这里就不展开叙述。无后效性指的是即某阶段状态一旦确定，就不受这个状态以后决策的影响。也就是说，某状态以后的过程不会影响以前的状态，只与当前状态有关，这其实就是前面所说的马尔可夫性质。而最优化原理是指，如果问题的最优解所包含的子问题的解也是最优的，就称该问题具有最优子结构，即满足最优化原理。马尔可夫决策过程的目标是最大化累积回报，回顾上一章讲到的回报公式：<span
+表示折扣因子。想必读者此时已经明白这简简单单的五个字母符号，背后蕴涵了丰富的内容。</p>
+<h2 id="ch3-动态规划">CH3 动态规划</h2>
+<h3 id="动态规划思想">动态规划思想</h3>
+<blockquote>
+<p>动态规划问题有三个性质，最优化原理、无后效性和有重叠子问题。其中有重叠子问题不是动态规划问题的必要条件，这里就不展开叙述。无后效性指的是即某阶段状态一旦确定，就不受这个状态以后决策的影响。也就是说，某状态以后的过程不会影响以前的状态，只与当前状态有关，这其实就是前面所说的马尔可夫性质。而最优化原理是指，如果问题的最优解所包含的子问题的解也是最优的，就称该问题具有最优子结构，即满足最优化原理。马尔可夫决策过程的目标是最大化累积回报，回顾上一章讲到的回报公式：<span
 class="math display">\[G_{t} = R_{t+1}+\gamma
 G_{t+1}\]</span>这个公式表明当前时步的回报跟下一个时步的回报是有关系的，这跟机器人路径之和例题中的状态转移方程很像。换句话说，我们可以在不同时步上通过某种方法最大化对应时步的回报来解决马尔可夫决策问题，我们要解决<span
 class="math inline">\(G_{t+1}\)</span> 的问题，可以一次拆分成解决<span
 class="math inline">\(G_{t}, G_{t-1},\cdots,G_{1}\)</span>
 的问题，这其实就满足动态规划性质中的最优化原理。</p>
-<p>书中原文如上所示，我个人的理解是动态优化实际上是利用了计算机的计算速度，可以使用迭代去进行求解，即如果一个m状态的问题可以与m-1状态的问题有联系，那么可通过设定边界条件把问题求出。
-### 状态价值函数和动作价值函数 <strong>状态价值函数（state-value
+</blockquote>
+<p>书中原文如上所示，我个人的理解是动态优化实际上是利用了计算机的计算速度，可以使用迭代去进行求解，即如果一个m状态的问题可以与m-1状态的问题有联系，那么可通过设定边界条件把问题求出。</p>
+<h3 id="状态价值函数和动作价值函数">状态价值函数和动作价值函数</h3>
+<p><strong>状态价值函数（state-value
 function）</strong>：直观上就是我们采取策略<span
 class="math inline">\(\pi\)</span>的话在状态<span
 class="math inline">\(s\)</span>处的回报是多少(因为就算采取动作a，r_t也是一个随机变量，所以需要取期望)，表达式为：
