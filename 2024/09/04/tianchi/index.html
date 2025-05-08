@@ -20,29 +20,28 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"stone2li.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":"ture","style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":-1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="本系列博客主要是我本人在学习datawhale的强化学习课程的一些心得和笔记，如有不妥可联系作者修改。 CH2 马尔可夫决策过程 非马尔可夫 当过程不满足马尔可夫性的时候也可以使用强化学习来解决，可以用深度学习神经网络来表示当前的棋局，并用蒙特卡洛搜索树等技术来模拟玩家的策略和未来可能的状态，来构建一个新的决策模型，这就是著名的AlphaGo算法。">
+    <meta name="description" content="在参加天池大赛的过程中，我发现自己对以下几个知识点还不够熟悉:  知识图谱，图数据库 yolo RDF(ResourceDescriptionFramework)模型是社么 随机森林 代价敏感学习，不平衡数据 CTC算法，对抗神经网络，HMM对齐，长期依赖问题 在BERT的预训练中不能用连续句子训练 强化学习(Q-learning，DQN)，迁移学习，关联规则挖掘，Aprori算">
 <meta property="og:type" content="article">
-<meta property="og:title" content="深度强化学习基础(1)：马尔可夫决策过程，动态规划">
-<meta property="og:url" content="https://stone2li.github.io/2024/06/19/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80-1/index.html">
+<meta property="og:title" content="天池大赛">
+<meta property="og:url" content="https://stone2li.github.io/2024/09/04/tianchi/index.html">
 <meta property="og:site_name" content="Songtao Li&#39;s Blog">
-<meta property="og:description" content="本系列博客主要是我本人在学习datawhale的强化学习课程的一些心得和笔记，如有不妥可联系作者修改。 CH2 马尔可夫决策过程 非马尔可夫 当过程不满足马尔可夫性的时候也可以使用强化学习来解决，可以用深度学习神经网络来表示当前的棋局，并用蒙特卡洛搜索树等技术来模拟玩家的策略和未来可能的状态，来构建一个新的决策模型，这就是著名的AlphaGo算法。">
+<meta property="og:description" content="在参加天池大赛的过程中，我发现自己对以下几个知识点还不够熟悉:  知识图谱，图数据库 yolo RDF(ResourceDescriptionFramework)模型是社么 随机森林 代价敏感学习，不平衡数据 CTC算法，对抗神经网络，HMM对齐，长期依赖问题 在BERT的预训练中不能用连续句子训练 强化学习(Q-learning，DQN)，迁移学习，关联规则挖掘，Aprori算">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2024-06-19T06:43:24.000Z">
-<meta property="article:modified_time" content="2025-05-08T04:51:02.138Z">
+<meta property="article:published_time" content="2024-09-04T14:40:58.000Z">
+<meta property="article:modified_time" content="2025-05-08T04:51:00.122Z">
 <meta property="article:author" content="Stone Li">
-<meta property="article:tag" content="datawhale">
-<meta property="article:tag" content="强化学习">
+<meta property="article:tag" content="天池">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://stone2li.github.io/2024/06/19/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80-1/">
+<link rel="canonical" href="https://stone2li.github.io/2024/09/04/tianchi/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://stone2li.github.io/2024/06/19/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80-1/","path":"2024/06/19/深度强化学习基础-1/","title":"深度强化学习基础(1)：马尔可夫决策过程，动态规划"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://stone2li.github.io/2024/09/04/tianchi/","path":"2024/09/04/tianchi/","title":"天池大赛"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>深度强化学习基础(1)：马尔可夫决策过程，动态规划 | Songtao Li's Blog</title>
+<title>天池大赛 | Songtao Li's Blog</title>
   
 
 
@@ -142,7 +141,8 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ch2-%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">CH2 马尔可夫决策过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%9E%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB"><span class="nav-number">1.1.</span> <span class="nav-text">非马尔可夫</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9E%E6%8A%A5"><span class="nav-number">1.2.</span> <span class="nav-text">回报</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mdp"><span class="nav-number">1.3.</span> <span class="nav-text">MDP</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ch3-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92"><span class="nav-number">2.</span> <span class="nav-text">CH3 动态规划</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%80%9D%E6%83%B3"><span class="nav-number">2.1.</span> <span class="nav-text">动态规划思想</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8A%B6%E6%80%81%E4%BB%B7%E5%80%BC%E5%87%BD%E6%95%B0%E5%92%8C%E5%8A%A8%E4%BD%9C%E4%BB%B7%E5%80%BC%E5%87%BD%E6%95%B0"><span class="nav-number">2.2.</span> <span class="nav-text">状态价值函数和动作价值函数</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1"><span class="nav-number">1.</span> <span class="nav-text">1. 知识图谱</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">2. 特征工程方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E8%9E%8D%E5%90%88%E7%AD%96%E7%95%A5"><span class="nav-number">3.</span> <span class="nav-text">3. 模型融合策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B6%85%E5%8F%82%E6%95%B0%E8%B0%83%E4%BC%98%E6%8A%80%E5%B7%A7"><span class="nav-number">4.</span> <span class="nav-text">4. 超参数调优技巧</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%9C%A8%E7%BB%93%E6%9E%84%E5%8C%96%E6%95%B0%E6%8D%AE%E4%B8%8A%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-number">5.</span> <span class="nav-text">5.
+深度学习在结构化数据上的应用</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -203,7 +203,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://stone2li.github.io/2024/06/19/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80-1/">
+    <link itemprop="mainEntityOfPage" href="https://stone2li.github.io/2024/09/04/tianchi/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/cat.jpg">
@@ -216,12 +216,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="深度强化学习基础(1)：马尔可夫决策过程，动态规划 | Songtao Li's Blog">
+      <meta itemprop="name" content="天池大赛 | Songtao Li's Blog">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          深度强化学习基础(1)：马尔可夫决策过程，动态规划
+          天池大赛
         </h1>
 
         <div class="post-meta-container">
@@ -232,14 +232,14 @@
       </span>
       <span class="post-meta-item-text">Posted on</span>
 
-      <time title="Created: 2024-06-19 14:43:24" itemprop="dateCreated datePublished" datetime="2024-06-19T14:43:24+08:00">2024-06-19</time>
+      <time title="Created: 2024-09-04 22:40:58" itemprop="dateCreated datePublished" datetime="2024-09-04T22:40:58+08:00">2024-09-04</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-05-08 12:51:02" itemprop="dateModified" datetime="2025-05-08T12:51:02+08:00">2025-05-08</time>
+      <time title="Modified: 2025-05-08 12:51:00" itemprop="dateModified" datetime="2025-05-08T12:51:00+08:00">2025-05-08</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -247,7 +247,7 @@
       </span>
       <span class="post-meta-item-text">In</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">强化学习</span></a>
+          <a href="/categories/%E7%AB%9E%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">竞赛</span></a>
         </span>
     </span>
 
@@ -260,73 +260,64 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p>本系列博客主要是我本人在学习datawhale的强化学习课程的一些心得和笔记，如有不妥可联系作者修改。</p>
-<h2 id="ch2-马尔可夫决策过程">CH2 马尔可夫决策过程</h2>
-<h3 id="非马尔可夫">非马尔可夫</h3>
-<p>当过程不满足马尔可夫性的时候也可以使用强化学习来解决，可以用深度学习神经网络来表示当前的棋局，并用蒙特卡洛搜索树等技术来模拟玩家的策略和未来可能的状态，来构建一个新的决策模型，这就是著名的AlphaGo算法。
-<span id="more"></span></p>
-<h3 id="回报">回报</h3>
-<p>在有限步长时，我们可以简单的把累积的奖励定义为回报，用<span
-class="math inline">\(G_t\)</span>表示，公式为： <span
-class="math display">\[G_t=r_{t+1}+r_{t+2}+\dots+r_T\]</span>
-但也有一些情况是没有终止状态的，换句话说智能体会持续与环境交互，比如人造卫星在发射出去后会一直在外太空作业直到报废或者被回收，这样的任务称之为持续性任务。在持续性任务中上面的回报公式是有问题的，因为此时<span
-class="math inline">\(T=\infty\)</span>。
-为了解决这个问题，我们引入一个折扣因子（discount factor）<span
-class="math inline">\(\gamma\)</span>，并可以将回报表示为: <span
-class="math display">\[
-G_t = r_{t+1} + \gamma r_{t+2} + \gamma^2 r_{t+3} + \cdots =
-\sum_{k=0}^{T=\infty} \gamma^k r_{t+k+1}\]</span> 其中<span
-class="math inline">\(\gamma\)</span> 取值范围在0 到 1
-之间，它表示了我们在考虑未来奖励时的重要程度，控制着当前奖励和未来奖励之间的权衡。换句话说，它体现了我们对长远目标的关注度。当
-<span class="math inline">\(\gamma=0\)</span>
-时，我们只会关心当前的奖励，而不会关心将来的任何奖励。而当 <span
-class="math inline">\(\gamma\)</span> 接近 1
-时，我们会对所有未来奖励都给予较高的关注度。</p>
-<p>同时，这样定义<span class="math inline">\(G_t\)</span>和<span
-class="math inline">\(G_{t+1}\)</span>有如下关系： <span
-class="math display">\[G_t=r_{t+1}+\gamma G_{t+1}\]</span></p>
-<h3 id="mdp">MDP</h3>
-<p>在马尔可夫链（马尔可夫过程）的基础上增加奖励元素就会形成马尔可夫奖励过程（Markov
-reward process,
-MRP），在马尔可夫奖励过程基础上增加动作的元素就会形成马尔可夫决策过程，也就是强化学习的基本问题模型之一。</p>
-<p>到这里我们就可以把马尔可夫决策过程描述成一个今天常用的写法，即用一个五元组$
-&lt;S,A,R,P,&gt;$ 来表示。其中 S 表示状态空间，即所有状态的集合，A
-表示动作空间，R 表示奖励函数，P 表示状态转移矩阵，<span
-class="math inline">\(\gamma\)</span>
-表示折扣因子。想必读者此时已经明白这简简单单的五个字母符号，背后蕴涵了丰富的内容。</p>
-<h2 id="ch3-动态规划">CH3 动态规划</h2>
-<h3 id="动态规划思想">动态规划思想</h3>
-<blockquote>
-<p>动态规划问题有三个性质，最优化原理、无后效性和有重叠子问题。其中有重叠子问题不是动态规划问题的必要条件，这里就不展开叙述。无后效性指的是即某阶段状态一旦确定，就不受这个状态以后决策的影响。也就是说，某状态以后的过程不会影响以前的状态，只与当前状态有关，这其实就是前面所说的马尔可夫性质。而最优化原理是指，如果问题的最优解所包含的子问题的解也是最优的，就称该问题具有最优子结构，即满足最优化原理。马尔可夫决策过程的目标是最大化累积回报，回顾上一章讲到的回报公式：<span
-class="math display">\[G_{t} = R_{t+1}+\gamma
-G_{t+1}\]</span>这个公式表明当前时步的回报跟下一个时步的回报是有关系的，这跟机器人路径之和例题中的状态转移方程很像。换句话说，我们可以在不同时步上通过某种方法最大化对应时步的回报来解决马尔可夫决策问题，我们要解决<span
-class="math inline">\(G_{t+1}\)</span> 的问题，可以一次拆分成解决<span
-class="math inline">\(G_{t}, G_{t-1},\cdots,G_{1}\)</span>
-的问题，这其实就满足动态规划性质中的最优化原理。</p>
-</blockquote>
-<p>书中原文如上所示，我个人的理解是动态优化实际上是利用了计算机的计算速度，可以使用迭代去进行求解，即如果一个m状态的问题可以与m-1状态的问题有联系，那么可通过设定边界条件把问题求出。</p>
-<h3 id="状态价值函数和动作价值函数">状态价值函数和动作价值函数</h3>
-<p><strong>状态价值函数（state-value
-function）</strong>：直观上就是我们采取策略<span
-class="math inline">\(\pi\)</span>的话在状态<span
-class="math inline">\(s\)</span>处的回报是多少(因为就算采取动作a，r_t也是一个随机变量，所以需要取期望)，表达式为：
-<span class="math display">\[\begin{aligned}
-V_\pi(s) &amp;=\mathbb{E}_{\pi}[R_{t+1}+\gamma R_{t+2}+\gamma^2 R_{t+3}
-+ \cdots |S_t=s ] \\
-&amp;=\mathbb{E}_{\pi}[G_t|S_t=s ]
-\end{aligned}\]</span> <strong>动作价值函数（action-value
-function）</strong>：直观上就是在状态价值函数的基础上确定了在<span
-class="math inline">\(s\)</span>状态会采取动作<span
-class="math inline">\(a\)</span>。表达式为： <span
-class="math display">\[Q_\pi(s, a)=\mathbb{E}_\pi\left[G_t \mid s_t=s,
-a_t=a\right]\]</span></p>
-<p><strong>两者关系</strong></p>
-<p><span class="math display">\[V_\pi(s)=\sum_{a \in A} \pi(a \mid s)
-Q_\pi(s, a)\]</span></p>
-<p>其中<span
-class="math inline">\(\pi(a|s)\)</span>表示策略函数，一般指在状态<span
-class="math inline">\(s\)</span>下执行动作<span
-class="math inline">\(a\)</span>的概率分布。</p>
+    <div class="post-body" itemprop="articleBody"><p>在参加天池大赛的过程中，我发现自己对以下几个知识点还不够熟悉:</p>
+<ol type="1">
+<li>知识图谱，图数据库</li>
+<li>yolo</li>
+<li>RDF(ResourceDescriptionFramework)模型是社么</li>
+<li>随机森林</li>
+<li>代价敏感学习，不平衡数据</li>
+<li>CTC算法，对抗神经网络，HMM对齐，长期依赖问题</li>
+<li>在BERT的预训练中不能用连续句子训练</li>
+<li>强化学习(Q-learning，DQN)，迁移学习，关联规则挖掘，Aprori算法，DBSCAN算法</li>
+</ol>
+<span id="more"></span>
+<p>让我们逐一探讨这些知识点:</p>
+<h2 id="知识图谱">1. 知识图谱</h2>
+<p>知识图谱是一种结构化的知识表示方法,它以图的形式描述实体之间的关系。在知识图谱中,节点代表实体,边代表实体间的关系。这种表示方法能够直观地展示复杂的知识结构,便于计算机理解和处理大规模的知识信息。</p>
+<p>知识图谱的构建通常包括实体识别、关系抽取、实体链接等步骤。首先,我们需要从非结构化的文本数据中识别出实体,如人名、地名、组织机构等。然后,我们需要分析实体之间的关系,这可能涉及自然语言处理和机器学习技术。最后,我们将识别出的实体和关系整合到一个统一的图结构中,形成知识图谱。</p>
+<p>图数据库是专门用于存储和查询图结构数据的数据库系统。与传统的关系型数据库不同,图数据库更适合处理高度关联的数据。在图数据库中,我们可以高效地进行复杂的图遍历操作,这在知识图谱的应用中尤为重要。</p>
+<p>常见的图数据库查询语言包括Cypher(用于Neo4j)和SPARQL(用于RDF数据)。以Cypher为例,我们可以使用类似于ASCII艺术的语法来描述图模式。例如,要查找两个人之间的所有关系路径,我们可以写出如下查询:</p>
+<p>MATCH (person1:Person {name: '张三'})-[*]-(person2:Person {name:
+'李四'}) RETURN *</p>
+<p>这个查询会返回从"张三"到"李四"的所有可能路径,包括直接关系和间接关系。</p>
+<p>图数据库的查询性能通常优于关系型数据库,特别是在处理多跳关系时。例如,在社交网络分析中,我们可能需要找出"朋友的朋友",这在图数据库中可以通过简单的路径查询实现,而在关系型数据库中则需要复杂的自连接操作。</p>
+<p>知识图谱和图数据库在多个领域都有广泛应用,包括搜索引擎、推荐系统、智能问答等。例如,Google的知识图谱被用于增强搜索结果,为用户提供更直接、更相关的信息。在推荐系统中,知识图谱可以帮助捕捉项目之间的语义关系,从而提供更准确的推荐。</p>
+<p>随着人工智能技术的发展,知识图谱正在与深度学习等技术深度融合,产生了图神经网络等新的研究方向。这些技术的进步将进一步推动知识图谱在更多领域的应用,为智能系统的发展提供强大的知识基础。</p>
+<h2 id="特征工程方法">2. 特征工程方法</h2>
+<p>特征工程是将原始数据转化为更好的特征表示的过程。一些常用的方法包括:</p>
+<ul>
+<li>特征选择：使用相关性分析、互信息、特征重要性等方法选择最相关的特征。</li>
+<li>特征组合：创建新的特征，如两个数值特征的乘积、比值等。</li>
+<li>特征编码：对类别型变量进行编码，如One-hot编码、Label编码等。</li>
+</ul>
+<p>在比赛中，创造性的特征工程往往能带来显著的性能提升。</p>
+<h2 id="模型融合策略">3. 模型融合策略</h2>
+<p>模型融合是竞赛中常用的提升性能的方法。主要包括:</p>
+<ul>
+<li>投票法：简单的多数投票或加权投票。</li>
+<li>平均法：简单平均或加权平均多个模型的预测结果。</li>
+<li>Stacking：使用一个元模型来组合基础模型的预测。</li>
+</ul>
+<p>我在比赛中尝试了这些方法，发现它们确实能够提高模型的稳定性和准确性。</p>
+<h2 id="超参数调优技巧">4. 超参数调优技巧</h2>
+<p>超参数调优对模型性能至关重要。常用的方法有:</p>
+<ul>
+<li>网格搜索：穷举所有可能的参数组合。</li>
+<li>随机搜索：随机采样参数空间。</li>
+<li>贝叶斯优化：基于先验知识，智能地选择下一组参数。</li>
+</ul>
+<p>在比赛中，我学会了如何更有效地进行超参数调优，这大大提高了我的效率。</p>
+<h2 id="深度学习在结构化数据上的应用">5.
+深度学习在结构化数据上的应用</h2>
+<p>虽然传统的机器学习方法在处理结构化数据时表现出色，但深度学习也有其独特优势:</p>
+<ul>
+<li>自动特征提取：深度神经网络可以自动学习复杂的特征表示。</li>
+<li>处理高维数据：对于高维特征，深度学习模型往往表现更好。</li>
+<li>端到端学习：可以直接从原始数据学习到最终输出，减少人工干预。</li>
+</ul>
+<p>在比赛中，我尝试了将深度学习应用于结构化数据，发现在某些任务上确实能带来性能提升。</p>
+<p>通过参加天池大赛，我不仅学习了这些知识点，还在实践中加深了理解。这些经验无疑会对我未来的数据科学之路大有裨益。</p>
 
     </div>
 
@@ -336,19 +327,18 @@ class="math inline">\(a\)</span>的概率分布。</p>
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/datawhale/" rel="tag"># datawhale</a>
-              <a href="/tags/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/" rel="tag"># 强化学习</a>
+              <a href="/tags/%E5%A4%A9%E6%B1%A0/" rel="tag"># 天池</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
+                <a href="/2024/06/19/%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80-1/" rel="prev" title="深度强化学习基础(1)：马尔可夫决策过程，动态规划">
+                  <i class="fa fa-angle-left"></i> 深度强化学习基础(1)：马尔可夫决策过程，动态规划
+                </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2024/09/04/tianchi/" rel="next" title="天池大赛">
-                  天池大赛 <i class="fa fa-angle-right"></i>
-                </a>
             </div>
           </div>
     </footer>
